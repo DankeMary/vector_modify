@@ -63,6 +63,27 @@ bool askForData(int &M, int &N, std::string &fileName)
 	return true;
 }
 
+/*std::vector<int> getContainer(std::ifstream& fin)    
+{
+	std::vector<int> v;
+	if (!fin.is_open()) // если файл не открыт
+	{std::cout << "Файл не может быть открыт!\n"; // сообщить об этом
+		v.erase(v.begin(), v.end()); } 
+	else
+	{
+		int a;
+
+		while (fin >> a)
+		{
+			v.push_back(a);
+		}
+		getchar();
+
+	}
+	
+	return v;
+}*/
+
 std::ofstream fillFileRandomCycle(int M, int N, std::string fileName)
 {
 	std::ofstream output(fileName.c_str());

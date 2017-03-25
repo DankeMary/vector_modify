@@ -44,6 +44,12 @@ double findAverage(std::vector<int> v)
 	return average;
 }
 
+void printToScreen(std::vector<int> v)
+{
+	for (unsigned i = 0; i < v.size(); i++)
+		std::cout << v.at(i) << "  ";
+}
+
 
 int main()
 {

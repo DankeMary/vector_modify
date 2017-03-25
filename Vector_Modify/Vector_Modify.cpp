@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <cstdlib>
 
 bool askForData(int &M, int &N, std::string &fileName)  
 {
@@ -61,6 +62,23 @@ bool askForData(int &M, int &N, std::string &fileName)
 	}
 	return true;
 }
+
+
+std::ofstream fillFileRandomGenerate(int M, const int N, std::string fileName)
+{
+	std::vector<int> v(N);
+	std::ofstream output;
+	output.open(fileName.c_str());
+	std::generate(v.begin(), v.end(), (rand() % (2 * M + 1) - M));	
+	
+	for (int i = 0; i < N; i++) {
+		output << v[i] << std::endl;
+	}
+	
+	return output;  
+}
+
+
 
 int findNumDifference(std::vector<int> v)
 {

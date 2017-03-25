@@ -32,6 +32,19 @@ int findSum(std::vector<int> v)
 		sum += v.at(i);
 	return sum;
 }
+
+double findAverage(std::vector<int> v)
+{
+	double average = 0;
+	unsigned i = 0;
+
+	for (i; i < v.size(); i++)
+		average += v.at(i);
+	average = average / i;
+	return average;
+}
+
+
 int main()
 {
     return 0;

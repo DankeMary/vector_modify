@@ -7,6 +7,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 
 int findNumDifference(std::vector<int> v)
@@ -48,6 +49,19 @@ std::vector<int> modify(std::vector<int> v)
 		if (v[i] % 2 == 0) {
 			v[i] = diff;
 		}
+	return v;
+}
+
+int returnNum(int num) {
+	return num;
+}
+
+std::vector<int> replaceForEach(std::vector<int> v)
+{
+	int diff = findNumDifference(v);
+
+	std::for_each(v.begin(), v.end(), returnNum(diff));
+
 	return v;
 }
 

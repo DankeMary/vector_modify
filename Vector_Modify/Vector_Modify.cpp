@@ -153,6 +153,8 @@ std::vector<int> modify(std::vector<int> v)
 	return v;
 }
 
+
+
 int returnNum(int num) {
 	return num;
 }
@@ -189,6 +191,20 @@ void printToScreen(std::vector<int> v)
 {
 	for (unsigned i = 0; i < v.size(); i++)
 		std::cout << v.at(i) << "  ";
+}
+
+void printToFile(std::vector<int> v)
+{
+	std::ofstream fout;
+	std::string fileName = "";
+	while (fileName == "") {
+		std::cout << "ֲגוהטעו טלÿ פאיכא" << std::endl;
+		std::cin >> fileName;
+	}
+	fout.open(fileName); 
+	for (unsigned i = 0; i < v.size(); i++)
+		fout << v.at(i) << "  ";
+	fout.close();
 }
 
 

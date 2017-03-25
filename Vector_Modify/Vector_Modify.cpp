@@ -24,6 +24,14 @@ int findNumDifference(std::vector<int> v)
 	}
 	return (max - min);
 }
+
+int findSum(std::vector<int> v)
+{
+	int sum = 0;
+	for (unsigned i = 0; i < v.size(); i++)
+		sum += v.at(i);
+	return sum;
+}
 int main()
 {
     return 0;

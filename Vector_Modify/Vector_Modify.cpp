@@ -9,6 +9,58 @@
 #include <string>
 #include <algorithm>
 
+bool askForData(int &M, int &N, std::string &fileName)  
+{
+
+	while (M <= 0)
+	{
+		std::cout << "Введите целое число М (M > 0)" << std::endl;
+		std::cin >> M;
+		if (M < 1)
+		{
+			int choice = 1;
+			std::cout << "Ошибка! Число должно быть больше 0" << std::endl;
+			std::cout << "1 - Повторить попытку" << std::endl;
+			std::cout << "2 - Выход в главное меню" << std::endl;
+			std::cin >> choice;
+			if (choice == 2) return false;
+		}
+	}
+
+	while (N <= 0)
+	{
+		std::cout << "Введите целое число N (N > 0)" << std::endl;
+		std::cin >> N;
+		if (N < 1)
+		{
+			int choice = 1;
+			std::cout << "Ошибка! Число должно быть больше 0" << std::endl;
+			std::cout << "1 - Повторить попытку" << std::endl;
+			std::cout << "2 - Выход в главное меню" << std::endl;
+			std::cin >> choice;
+			if (choice == 2) return false;
+		}
+	}
+
+	std::cout << "Введите имя файла" << std::endl;
+	std::cin >> fileName;
+
+	while (fileName == "")
+	{
+		std::cout << "Введите имя файла для заполнения" << std::endl;
+		std::cin >> fileName;
+		if (fileName == "")
+		{
+			int choice = 1;
+			std::cout << "Ошибка! Имя файла должно быть непустым" << std::endl;
+			std::cout << "1 - Повторить попытку" << std::endl;
+			std::cout << "2 - Выход в главное меню" << std::endl;
+			std::cin >> choice;
+			if (choice == 2) return false;
+		}
+	}
+	return true;
+}
 
 int findNumDifference(std::vector<int> v)
 {

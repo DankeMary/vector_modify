@@ -25,6 +25,22 @@ int findNumDifference(std::vector<int> v)
 	return (max - min);
 }
 
+int findNumDifference(std::vector<int>::iterator first, std::vector<int>::iterator last)
+{
+	int min = 0;
+	int max = 0;
+	while (first++ != last)
+	{
+		if (*first < min) {
+			min = *first;
+		}
+		else if (*first > max) {
+			max = *first;
+		}
+	}
+	return (max - min);
+}
+
 std::vector<int> modify(std::vector<int> v)
 {
 	int diff = findNumDifference(v);

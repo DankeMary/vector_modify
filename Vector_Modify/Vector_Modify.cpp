@@ -63,7 +63,8 @@ bool askForData(int &M, int &N, std::string &fileName)
 	return true;
 }
 
-/*std::vector<int> getContainer(std::ifstream& fin)    
+/*  TO BE CHANGED  
+std::vector<int> getContainer(std::ifstream& fin)    
 {
 	std::vector<int> v;
 	if (!fin.is_open()) // если файл не открыт
@@ -153,7 +154,34 @@ std::vector<int> modify(std::vector<int> v)
 	return v;
 }
 
+/*    TO BE CHANGED  
+std::vector<int> modify(std::vector<int>::iterator first, std::vector<int>::iterator last) {
+	int diff = findNumDifference(first, last);
+	std::vector<int> v;
+	int count = 0;
+	int i = 0;
+	while (first-- != null) {  
+		first--;
+		count++;
+	}
 
+	while (i != count) {
+		v.push_back(*first);
+		first++;
+	}
+
+	while (first++ != last) {
+		if (*first % 2 == 0) {
+			*first = diff;
+		}
+		first++;
+	}
+	while (last++ != null) {
+		v.push_back(*last);
+		last++;
+	}
+	return v;  
+}*/
 
 int returnNum(int num) {
 	return num;

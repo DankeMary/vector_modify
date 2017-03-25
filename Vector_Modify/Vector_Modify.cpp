@@ -63,6 +63,16 @@ bool askForData(int &M, int &N, std::string &fileName)
 	return true;
 }
 
+std::ofstream fillFileRandomCycle(int M, int N, std::string fileName)
+{
+	std::ofstream output(fileName.c_str());
+
+	for (int i = 0; i < N; i++) {
+		output << -M + rand() % M << std::endl;
+	}
+
+	return output;
+}
 
 std::ofstream fillFileRandomGenerate(int M, const int N, std::string fileName)
 {

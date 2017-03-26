@@ -63,7 +63,7 @@ bool askForData(int &M, int &N, std::string &fileName)
 	return true;
 }
 
-/*  TO BE CHANGED  
+/*  TO BE CHANGED  */
 std::vector<int> getContainer(std::ifstream& fin)    
 {
 	std::vector<int> v;
@@ -83,7 +83,7 @@ std::vector<int> getContainer(std::ifstream& fin)
 	}
 	
 	return v;
-}*/
+}
 
 std::ofstream fillFileRandomCycle(int M, int N, std::string fileName)
 {
@@ -96,6 +96,7 @@ std::ofstream fillFileRandomCycle(int M, int N, std::string fileName)
 	return output;
 }
 
+/* CAUSES AN ERROR */
 std::ofstream fillFileRandomGenerate(int M, const int N, std::string fileName)
 {
 	std::vector<int> v(N);
@@ -154,7 +155,7 @@ std::vector<int> modify(std::vector<int> v)
 	return v;
 }
 
-/*    TO BE CHANGED  
+/*    TO BE CHANGED  */
 std::vector<int> modify(std::vector<int>::iterator first, std::vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
 	std::vector<int> v;
@@ -181,12 +182,13 @@ std::vector<int> modify(std::vector<int>::iterator first, std::vector<int>::iter
 		last++;
 	}
 	return v;  
-}*/
+}
 
 int returnNum(int num) {
 	return num;
 }
 
+/* CAUSES AN ERROR */
 std::vector<int> replaceForEach(std::vector<int> v)
 {
 	int diff = findNumDifference(v);
@@ -235,6 +237,74 @@ void printToFile(std::vector<int> v)
 	fout.close();
 }
 
+/*    TO BE CHANGED  */
+void printMenu()
+{
+	int option = 0;
+	int M = 0, N = 0;
+	std::string fileName = "";
+	std::ifstream fin;
+	//std::ofstream fout;
+	std::vector<int> v, modifiedV;
+	while (option != 10)
+	{
+		std::cout << "\n";
+		std::cout << "\n1. Заполнить файл рандомными числами\n";
+		std::cout << "2. Загрузить числа из файла\n";
+		std::cout << "3. Преобразовать контейнер\n";
+		std::cout << "4. Преобразовать контейнер с итераторами\n";
+		std::cout << "5. Преобразование с transform\n";
+		std::cout << "6. Преобразование с for_each\n";
+		std::cout << "7. Вычислить сумму чисел\n";  //  
+		std::cout << "8. Вычислить среднее арифметическое чисел\n";   //  
+		std::cout << "9. Вывести результат\n"; //    Check emptiness!
+		std::cout << "10. Выход\n";
+		std::cout << "\n";
+
+		std::cin >> option;
+
+
+		switch (option) {
+		case 1:
+			if (askForData(M, N, fileName))
+				fillFileRandomCycle(M, N, fileName);
+			break;
+		case 2:
+			v = getContainer(fin);
+			break;
+		case 3:
+			modifiedV = modify(v);
+			break;
+		case 4:
+			modifiedV = modify(v.begin(), v.end());
+			break;
+		case 5:
+			//modifiedV = replaceTransform(v);
+			break;
+		case 6:
+			modifiedV = replaceForEach(v);
+			break;
+		case 7:
+			std::cout << "Сумма элементов вектора - " << findSum(v) << std::endl;
+			break;
+		case 8:
+			std::cout << "Среднее арифметическое элементов вектора - " << findAverage(v) << std::endl;
+			break;
+		case 9:
+			std::cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << std::endl;
+			std::cin >> option;
+			if (option == 1)
+			{
+				printToScreen(v);
+				option = 9;
+			}
+			printToFile(v);
+			break;
+		case 10:;
+		default: std::cout << "Ошибка! Повторите ввод" << std::endl;
+		}
+	}
+}
 
 int main()
 {

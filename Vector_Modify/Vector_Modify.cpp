@@ -200,6 +200,12 @@ vector<int> replaceForEach(vector<int> v)
 
 	return v;
 }
+int returnIfOdd(int i, int j) {
+	if (i % 2 == 0)
+		return j;
+	else
+		return i;
+}
 
 int findSum(vector<int> v)
 {

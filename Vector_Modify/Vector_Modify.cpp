@@ -210,7 +210,7 @@ int returnIfOdd(int i, int j) {
 vector<int> replaceTransform(vector<int> v) {
 	int diff = findNumDifference(v);
 	vector<int> diffV(v.size());
-	for (int i = 0; i < diffV.size(); i++)
+	for (unsigned i = 0; i < diffV.size(); i++)
 		diffV[i] = diff;
 
 	transform(v.begin(), v.end(), diffV.begin(), returnIfOdd);

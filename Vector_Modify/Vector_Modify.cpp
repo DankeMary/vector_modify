@@ -1,5 +1,5 @@
 // Vector_Modify.cpp: определяет точку входа для консольного приложения.
-//18. Заменить каждое четное число на разность максимального и минимального чисел. { A) вектор (std::vector)}
+//18. Заменить каждое четное число на разность максимального и минимального чисел. { A) вектор (vector)}
 // Выполнила : Лактионова Мария Александровна (2к, 9г)
 
 #include "stdafx.h"
@@ -10,53 +10,54 @@
 #include <algorithm>
 #include <cstdlib>
 
-bool askForData(int &M, int &N, std::string &fileName)  
+using namespace std;
+bool askForData(int &M, int &N, string &fileName)  
 {
 
 	while (M <= 0)
 	{
-		std::cout << "Введите целое число М (M > 0)" << std::endl;
-		std::cin >> M;
+		cout << "Введите целое число М (M > 0)" << endl;
+		cin >> M;
 		if (M < 1)
 		{
 			int choice = 1;
-			std::cout << "Ошибка! Число должно быть больше 0" << std::endl;
-			std::cout << "1 - Повторить попытку" << std::endl;
-			std::cout << "2 - Выход в главное меню" << std::endl;
-			std::cin >> choice;
+			cout << "Ошибка! Число должно быть больше 0" << endl;
+			cout << "1 - Повторить попытку" << endl;
+			cout << "2 - Выход в главное меню" << endl;
+			cin >> choice;
 			if (choice == 2) return false;
 		}
 	}
 
 	while (N <= 0)
 	{
-		std::cout << "Введите целое число N (N > 0)" << std::endl;
-		std::cin >> N;
+		cout << "Введите целое число N (N > 0)" << endl;
+		cin >> N;
 		if (N < 1)
 		{
 			int choice = 1;
-			std::cout << "Ошибка! Число должно быть больше 0" << std::endl;
-			std::cout << "1 - Повторить попытку" << std::endl;
-			std::cout << "2 - Выход в главное меню" << std::endl;
-			std::cin >> choice;
+			cout << "Ошибка! Число должно быть больше 0" << endl;
+			cout << "1 - Повторить попытку" << endl;
+			cout << "2 - Выход в главное меню" << endl;
+			cin >> choice;
 			if (choice == 2) return false;
 		}
 	}
 
-	std::cout << "Введите имя файла" << std::endl;
-	std::cin >> fileName;
+	cout << "Введите имя файла" << endl;
+	cin >> fileName;
 
 	while (fileName == "")
 	{
-		std::cout << "Введите имя файла для заполнения" << std::endl;
-		std::cin >> fileName;
+		cout << "Введите имя файла для заполнения" << endl;
+		cin >> fileName;
 		if (fileName == "")
 		{
 			int choice = 1;
-			std::cout << "Ошибка! Имя файла должно быть непустым" << std::endl;
-			std::cout << "1 - Повторить попытку" << std::endl;
-			std::cout << "2 - Выход в главное меню" << std::endl;
-			std::cin >> choice;
+			cout << "Ошибка! Имя файла должно быть непустым" << endl;
+			cout << "1 - Повторить попытку" << endl;
+			cout << "2 - Выход в главное меню" << endl;
+			cin >> choice;
 			if (choice == 2) return false;
 		}
 	}
@@ -64,11 +65,11 @@ bool askForData(int &M, int &N, std::string &fileName)
 }
 
 /*  TO BE CHANGED  */
-std::vector<int> getContainer(std::ifstream& fin)    
+vector<int> getContainer(ifstream& fin)    
 {
-	std::vector<int> v;
+	vector<int> v;
 	if (!fin.is_open()) // если файл не открыт
-	{std::cout << "Файл не может быть открыт!\n"; // сообщить об этом
+	{cout << "Файл не может быть открыт!\n"; // сообщить об этом
 		v.erase(v.begin(), v.end()); } 
 	else
 	{
@@ -85,27 +86,27 @@ std::vector<int> getContainer(std::ifstream& fin)
 	return v;
 }
 
-std::ofstream fillFileRandomCycle(int M, int N, std::string fileName)
+ofstream fillFileRandomCycle(int M, int N, string fileName)
 {
-	std::ofstream output(fileName.c_str());
+	ofstream output(fileName.c_str());
 
 	for (int i = 0; i < N; i++) {
-		output << -M + rand() % M << std::endl;
+		output << -M + rand() % M << endl;
 	}
 
 	return output;
 }
 
 /* CAUSES AN ERROR */
-std::ofstream fillFileRandomGenerate(int M, const int N, std::string fileName)
+ofstream fillFileRandomGenerate(int M, const int N, string fileName)
 {
-	std::vector<int> v(N);
-	std::ofstream output;
+	vector<int> v(N);
+	ofstream output;
 	output.open(fileName.c_str());
-	std::generate(v.begin(), v.end(), (rand() % (2 * M + 1) - M));	
+	generate(v.begin(), v.end(), (rand() % (2 * M + 1) - M));	
 	
 	for (int i = 0; i < N; i++) {
-		output << v[i] << std::endl;
+		output << v[i] << endl;
 	}
 	
 	return output;  
@@ -113,7 +114,7 @@ std::ofstream fillFileRandomGenerate(int M, const int N, std::string fileName)
 
 
 
-int findNumDifference(std::vector<int> v)
+int findNumDifference(vector<int> v)
 {
 	int min = 0;
 	int max = 0;
@@ -129,7 +130,7 @@ int findNumDifference(std::vector<int> v)
 	return (max - min);
 }
 
-int findNumDifference(std::vector<int>::iterator first, std::vector<int>::iterator last)
+int findNumDifference(vector<int>::iterator first, vector<int>::iterator last)
 {
 	int min = 0;
 	int max = 0;
@@ -145,7 +146,7 @@ int findNumDifference(std::vector<int>::iterator first, std::vector<int>::iterat
 	return (max - min);
 }
 
-std::vector<int> modify(std::vector<int> v)
+vector<int> modify(vector<int> v)
 {
 	int diff = findNumDifference(v);
 	for (unsigned i = 0; i < v.size(); i++)
@@ -156,9 +157,9 @@ std::vector<int> modify(std::vector<int> v)
 }
 
 /*    TO BE CHANGED  */
-std::vector<int> modify(std::vector<int>::iterator first, std::vector<int>::iterator last) {
+vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
-	std::vector<int> v;
+	vector<int> v;
 	int count = 0;
 	int i = 0;
 	while (first-- != null) {  
@@ -189,16 +190,16 @@ int returnNum(int num) {
 }
 
 /* CAUSES AN ERROR */
-std::vector<int> replaceForEach(std::vector<int> v)
+vector<int> replaceForEach(vector<int> v)
 {
 	int diff = findNumDifference(v);
 
-	std::for_each(v.begin(), v.end(), returnNum(diff));
+	for_each(v.begin(), v.end(), returnNum(diff));
 
 	return v;
 }
 
-int findSum(std::vector<int> v)
+int findSum(vector<int> v)
 {
 	int sum = 0;
 	for (unsigned i = 0; i < v.size(); i++)
@@ -206,7 +207,7 @@ int findSum(std::vector<int> v)
 	return sum;
 }
 
-double findAverage(std::vector<int> v)
+double findAverage(vector<int> v)
 {
 	double average = 0;
 	unsigned i = 0;
@@ -217,24 +218,31 @@ double findAverage(std::vector<int> v)
 	return average;
 }
 
-void printToScreen(std::vector<int> v)
+void printToScreen(vector<int> v)
 {
 	for (unsigned i = 0; i < v.size(); i++)
-		std::cout << v.at(i) << "  ";
+		cout << v.at(i) << "  ";
 }
 
-void printToFile(std::vector<int> v)
+void printToFile(vector<int> v)
 {
-	std::ofstream fout;
-	std::string fileName = "";
+	ofstream fout;
+	string fileName = "";
 	while (fileName == "") {
-		std::cout << "Введите имя файла" << std::endl;
-		std::cin >> fileName;
+		cout << "Введите имя файла" << endl;
+		cin >> fileName;
 	}
 	fout.open(fileName); 
 	for (unsigned i = 0; i < v.size(); i++)
 		fout << v.at(i) << "  ";
 	fout.close();
+}
+void printResult(vector<int> v, vector<int> vMod)
+{
+	cout << "/nИсходный вектор: " << endl;
+	printToScreen(v);
+	cout << "/nИзмененный вектор: " << endl;
+	printToScreen(vMod);
 }
 
 /*    TO BE CHANGED  */
@@ -242,26 +250,26 @@ void printMenu()
 {
 	int option = 0;
 	int M = 0, N = 0;
-	std::string fileName = "";
-	std::ifstream fin;
-	//std::ofstream fout;
-	std::vector<int> v, modifiedV;
+	string fileName = "";
+	ifstream fin;
+	//ofstream fout;
+	vector<int> v, modifiedV;
 	while (option != 10)
 	{
-		std::cout << "\n";
-		std::cout << "\n1. Заполнить файл рандомными числами\n";
-		std::cout << "2. Загрузить числа из файла\n";
-		std::cout << "3. Преобразовать контейнер\n";
-		std::cout << "4. Преобразовать контейнер с итераторами\n";
-		std::cout << "5. Преобразование с transform\n";
-		std::cout << "6. Преобразование с for_each\n";
-		std::cout << "7. Вычислить сумму чисел\n";  //  
-		std::cout << "8. Вычислить среднее арифметическое чисел\n";   //  
-		std::cout << "9. Вывести результат\n"; //    Check emptiness!
-		std::cout << "10. Выход\n";
-		std::cout << "\n";
+		cout << "\n";
+		cout << "\n1. Заполнить файл рандомными числами\n";
+		cout << "2. Загрузить числа из файла\n";
+		cout << "3. Преобразовать контейнер\n";
+		cout << "4. Преобразовать контейнер с итераторами\n";
+		cout << "5. Преобразование с transform\n";
+		cout << "6. Преобразование с for_each\n";
+		cout << "7. Вычислить сумму чисел\n";  //  
+		cout << "8. Вычислить среднее арифметическое чисел\n";   //  
+		cout << "9. Вывести результат\n"; //    Check emptiness!
+		cout << "10. Выход\n";
+		cout << "\n";
 
-		std::cin >> option;
+		cin >> option;
 
 
 		switch (option) {
@@ -273,7 +281,10 @@ void printMenu()
 			v = getContainer(fin);
 			break;
 		case 3:
-			modifiedV = modify(v);
+			if (v.empty()) {
+				cout << "Контейнер пуст" << endl;
+			} else
+				modifiedV = modify(v);
 			break;
 		case 4:
 			modifiedV = modify(v.begin(), v.end());
@@ -285,14 +296,14 @@ void printMenu()
 			modifiedV = replaceForEach(v);
 			break;
 		case 7:
-			std::cout << "Сумма элементов вектора - " << findSum(v) << std::endl;
+			cout << "Сумма элементов вектора - " << findSum(v) << endl;
 			break;
 		case 8:
-			std::cout << "Среднее арифметическое элементов вектора - " << findAverage(v) << std::endl;
+			cout << "Среднее арифметическое элементов вектора - " << findAverage(v) << endl;
 			break;
 		case 9:
-			std::cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << std::endl;
-			std::cin >> option;
+			cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
+			cin >> option;
 			if (option == 1)
 			{
 				printToScreen(v);
@@ -301,7 +312,7 @@ void printMenu()
 			printToFile(v);
 			break;
 		case 10:;
-		default: std::cout << "Ошибка! Повторите ввод" << std::endl;
+		default: cout << "Ошибка! Повторите ввод" << endl;
 		}
 	}
 }

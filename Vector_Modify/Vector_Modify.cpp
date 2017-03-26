@@ -207,6 +207,18 @@ int returnIfOdd(int i, int j) {
 		return i;
 }
 
+vector<int> replaceTransform(vector<int> v) {
+	int diff = findNumDifference(v);
+	vector<int> diffV(v.size());
+	for (int i = 0; i < diffV.size(); i++)
+		diffV[i] = diff;
+
+	transform(v.begin(), v.end(), diffV.begin(), returnIfOdd);
+
+	return v;
+}
+
+
 int findSum(vector<int> v)
 {
 	int sum = 0;
@@ -270,9 +282,9 @@ void printMenu()
 		cout << "4. Преобразовать контейнер с итераторами\n";
 		cout << "5. Преобразование с transform\n";
 		cout << "6. Преобразование с for_each\n";
-		cout << "7. Вычислить сумму чисел\n";  //  
-		cout << "8. Вычислить среднее арифметическое чисел\n";   //  
-		cout << "9. Вывести результат\n"; //    Check emptiness!
+		cout << "7. Вычислить сумму чисел\n";  
+		cout << "8. Вычислить среднее арифметическое чисел\n";  
+		cout << "9. Вывести результат\n"; 
 		cout << "10. Выход\n";
 		cout << "\n";
 
@@ -331,17 +343,21 @@ void printMenu()
 			cout << "Среднее арифметическое элементов вектора - " << findAverage(v) << endl;
 			break;
 		case 9:
-			cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
-			while (option != 1 || option != 2) {
-				cin >> option;
-				if (option == 1)
-				{
-					printToScreen(v);
-					option = 9;
-				}
-				else if (option != 2) {
-					cout << "Повторите ввод!" << endl;
-				}
+			if (v.empty())
+				cout << "Контейнер пуст" << endl;
+			else {
+				cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
+				while (option != 1 || option != 2) {
+					cin >> option;
+					if (option == 1)
+					{
+						printToScreen(v);
+						option = 9;
+					}
+					else if (option != 2) {
+						cout << "Повторите ввод!" << endl;
+					}
+				}			
 			}
 				
 			printToFile(v);

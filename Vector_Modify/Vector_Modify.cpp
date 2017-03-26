@@ -11,6 +11,7 @@
 #include <cstdlib>
 
 using namespace std;
+
 bool askForData(int &M, int &N, string &fileName)  
 {
 
@@ -69,8 +70,10 @@ vector<int> getContainer(ifstream& fin)
 {
 	vector<int> v;
 	if (!fin.is_open()) // если файл не открыт
-	{cout << "Файл не может быть открыт!\n"; // сообщить об этом
-		v.erase(v.begin(), v.end()); } 
+	{
+		cout << "Файл не может быть открыт!\n"; // сообщить об этом
+		//v.erase(v.begin(), v.end()); 
+	} 
 	else
 	{
 		int a;
@@ -80,7 +83,6 @@ vector<int> getContainer(ifstream& fin)
 			v.push_back(a);
 		}
 		getchar();
-
 	}
 	
 	return v;
@@ -102,7 +104,7 @@ ofstream fillFileRandomGenerate(int M, const int N, string fileName)
 {
 	vector<int> v(N);
 	ofstream output;
-	output.open(fileName.c_str());
+	output.open(fileName);
 	generate(v.begin(), v.end(), (rand() % (2 * M + 1) - M));	
 	
 	for (int i = 0; i < N; i++) {
@@ -234,7 +236,7 @@ void printToFile(vector<int> v)
 	}
 	fout.open(fileName); 
 	for (unsigned i = 0; i < v.size(); i++)
-		fout << v.at(i) << "  ";
+		fout << v.at(i) << "  " << endl;
 	fout.close();
 }
 void printResult(vector<int> v, vector<int> vMod)
@@ -252,7 +254,6 @@ void printMenu()
 	int M = 0, N = 0;
 	string fileName = "";
 	ifstream fin;
-	//ofstream fout;
 	vector<int> v, modifiedV;
 	while (option != 10)
 	{
@@ -283,17 +284,39 @@ void printMenu()
 		case 3:
 			if (v.empty()) {
 				cout << "Контейнер пуст" << endl;
-			} else
+			}
+			else {
 				modifiedV = modify(v);
+				printResult(v, modifiedV);
+			}				
 			break;
 		case 4:
-			modifiedV = modify(v.begin(), v.end());
+			if (v.empty()) {
+				cout << "Контейнер пуст" << endl;
+			}
+			else {
+				modifiedV = modify(v.begin(), v.end());
+				printResult(v, modifiedV);
+			}			
 			break;
 		case 5:
-			//modifiedV = replaceTransform(v);
+			
+			if (v.empty()) {
+				cout << "Контейнер пуст" << endl;
+			}
+			else {
+				modifiedV = replaceTransform(v);
+				printResult(v, modifiedV);
+			}
 			break;
 		case 6:
-			modifiedV = replaceForEach(v);
+			if (v.empty()) {
+				cout << "Контейнер пуст" << endl;
+			}
+			else {
+				modifiedV = replaceForEach(v);
+				printResult(v, modifiedV);
+			}
 			break;
 		case 7:
 			cout << "Сумма элементов вектора - " << findSum(v) << endl;
@@ -303,18 +326,27 @@ void printMenu()
 			break;
 		case 9:
 			cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
-			cin >> option;
-			if (option == 1)
-			{
-				printToScreen(v);
-				option = 9;
+			while (option != 1 || option != 2) {
+				cin >> option;
+				if (option == 1)
+				{
+					printToScreen(v);
+					option = 9;
+				}
+				else if (option != 2) {
+					cout << "Повторите ввод!" << endl;
+				}
 			}
+				
 			printToFile(v);
 			break;
-		case 10:;
+		case 10: break;
 		default: cout << "Ошибка! Повторите ввод" << endl;
 		}
 	}
+	fin.close();
+	v.erase(v.begin(), v.end());
+	modifiedV.erase(v.begin(), v.end());
 }
 
 int main()

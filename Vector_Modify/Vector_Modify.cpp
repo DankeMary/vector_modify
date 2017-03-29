@@ -190,6 +190,13 @@ void getRange(vector<int> v, int &a, int &b) {
 			cout << "Число должно быть не меньше левой границы (" << a << ")! Повторите ввод" << endl;
 	}
 }
+
+void getToElems(vector<int>::iterator &left, vector<int>::iterator &right, int a, int b) {
+	for (int i = 0; i < a; i++)
+		left++;
+	for (int i = 0; i < b; i++)
+		right++;
+}
 vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
 	vector<int> v(first, last);
@@ -318,7 +325,7 @@ void printMenu()
 		cout << "\n1. Заполнить файл рандомными числами\n";
 		cout << "2. Загрузить числа из файла\n";
 		cout << "3. Преобразовать контейнер\n";
-		cout << "4. Преобразовать контейнер с итераторами\n";
+		cout << "4. Преобразовать часть контейнера\n";
 		cout << "5. Преобразование с transform\n";
 		cout << "6. Преобразование с for_each\n";
 		cout << "7. Вычислить сумму чисел\n";  
@@ -351,6 +358,9 @@ void printMenu()
 				cout << "Контейнер пуст" << endl;
 			}
 			else {
+				int a, b;
+				getRange(v, a, b);
+
 				modifiedV = modify(v.begin(), v.end());
 				printResult(v, modifiedV);
 			}			

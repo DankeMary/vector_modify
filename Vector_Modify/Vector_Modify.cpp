@@ -99,13 +99,21 @@ ofstream fillFileRandomCycle(int M, int N, string fileName)
 	return output;
 }
 
+struct randNumFromSegment {
+	randNumFromSegment(int x) :m(x) {};
+	int operator()(){
+		return rand() % (2 * m + 1) - m;
+	}
+	int m;
+};
+
 /* CAUSES AN ERROR */
 ofstream fillFileRandomGenerate(int M, const int N, string fileName)
 {
 	vector<int> v(N);
 	ofstream output;
 	output.open(fileName);
-	generate(v.begin(), v.end(), (rand() % (2 * M + 1) - M));	
+	generate(v.begin(), v.end(), randNumFromSegment(M));	// ?????????????????????????????????????????????
 	
 	for (int i = 0; i < N; i++) {
 		output << v[i] << endl;
@@ -187,25 +195,43 @@ vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	return v;  
 }
 
-int returnNum(int num) {
+/*int returnNum(int num) {
 	return num;
-}
+}*/
+
+struct returnNum {
+	returnNum(){};
+	int operator()(int num) {
+		return num;
+	}
+};
 
 /* CAUSES AN ERROR */
 vector<int> replaceForEach(vector<int> v)
 {
 	int diff = findNumDifference(v);
 
-	for_each(v.begin(), v.end(), returnNum(diff));
+	for_each(v.begin(), v.end(), returnNum());
 
 	return v;
 }
-int returnIfOdd(int i, int j) {
+/*int returnIfOdd(int i, int j) {
 	if (i % 2 == 0)
 		return j;
 	else
 		return i;
-}
+}*/
+
+struct returnIfOdd {
+	returnIfOdd(int x) :m(x) {};
+	int operator()(int& n) {
+		if (n % 2 == 0) {
+			return m;
+		};
+		return n;
+	}
+	int m;
+};
 
 vector<int> replaceTransform(vector<int> v) {
 	int diff = findNumDifference(v);
@@ -213,7 +239,7 @@ vector<int> replaceTransform(vector<int> v) {
 	for (unsigned i = 0; i < diffV.size(); i++)
 		diffV[i] = diff;
 
-	transform(v.begin(), v.end(), diffV.begin(), returnIfOdd);
+	transform(v.begin(), v.end(), diffV.begin(), returnIfOdd(diff));
 
 	return v;
 }
@@ -313,7 +339,7 @@ void printMenu()
 				cout << "Контейнер пуст" << endl;
 			}
 			else {
-				modifiedV = modify(v.begin(), v.end());
+				//modifiedV = modify(v.begin(), v.end());
 				printResult(v, modifiedV);
 			}			
 			break;
@@ -332,7 +358,7 @@ void printMenu()
 				cout << "Контейнер пуст" << endl;
 			}
 			else {
-				modifiedV = replaceForEach(v);
+				//modifiedV = replaceForEach(v);
 				printResult(v, modifiedV);
 			}
 			break;

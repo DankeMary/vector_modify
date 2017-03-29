@@ -122,8 +122,6 @@ ofstream fillFileRandomGenerate(int M, const int N, string fileName)
 	return output;  
 }
 
-
-
 int findNumDifference(vector<int> v)
 {
 	int min = 0;
@@ -178,14 +176,12 @@ vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	return v;
 }
 
-
 struct returnNum {
 	returnNum(){};
 	int operator()(int num) {
 		return num;
 	}
 };
-
 
 vector<int> replaceForEach(vector<int> v)
 {
@@ -244,6 +240,14 @@ void printToScreen(vector<int> v)
 		cout << v.at(i) << "  ";
 }
 
+void printToScreen(vector<int>::iterator first, vector<int>::iterator last)
+{
+	while (first++ != last)
+	{
+		cout << *first << "  ";
+	}
+}
+
 void printToFile(vector<int> v)
 {
 	ofstream fout;
@@ -257,10 +261,19 @@ void printToFile(vector<int> v)
 		fout << v.at(i) << "  " << endl;
 	fout.close();
 }
+
 void printResult(vector<int> v, vector<int> vMod)
 {
 	cout << "/nИсходный вектор: " << endl;
 	printToScreen(v);
+	cout << "/nИзмененный вектор: " << endl;
+	printToScreen(vMod);
+}
+
+void printResult(vector<int>::iterator first, vector<int>::iterator last, vector<int> vMod)
+{
+	cout << "/nИсходный вектор: " << endl;
+	printToScreen(first, last);
 	cout << "/nИзмененный вектор: " << endl;
 	printToScreen(vMod);
 }
@@ -313,7 +326,7 @@ void printMenu()
 				cout << "Контейнер пуст" << endl;
 			}
 			else {
-				//modifiedV = modify(v.begin(), v.end());
+				modifiedV = modify(v.begin(), v.end());
 				printResult(v, modifiedV);
 			}			
 			break;
@@ -332,7 +345,7 @@ void printMenu()
 				cout << "Контейнер пуст" << endl;
 			}
 			else {
-				//modifiedV = replaceForEach(v);
+				modifiedV = replaceForEach(v);
 				printResult(v, modifiedV);
 			}
 			break;

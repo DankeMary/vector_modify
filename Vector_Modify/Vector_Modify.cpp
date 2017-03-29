@@ -164,6 +164,32 @@ vector<int> modify(vector<int> v)
 	return v;
 }
 
+void getRange(vector<int> v, int &a, int &b) {
+	a = -1;
+	b = 0;
+	cout << "Введите левую границу" << endl;
+	while ((a < 0) || (a >= v.size()))
+	{
+		cin >> a;
+		if ((a < 0) || (a >= v.size()))
+			cout << "Число должно быть больше 0! Повторите ввод" << endl;
+		else if (a >= v.size())
+			cout << "Число превышает размер вектора (" << v.size() << ")! Повторите ввод" << endl;	
+	}		
+	
+	cout << "Введите правую границу" << endl;
+	cin >> b;
+	while ((b < 0) || (b >= v.size()) || (b < a)) 
+	{
+		cin >> a;
+		if ((b < 0) || (b >= v.size()))
+			cout << "Число должно быть не меньше 0! Повторите ввод" << endl;
+		else if (b >= v.size())
+			cout << "Число вне диапазона (0.." << v.size()-1 << ")! Повторите ввод" << endl;
+		else if (b < a)
+			cout << "Число должно быть не меньше левой границы (" << a << ")! Повторите ввод" << endl;
+	}
+}
 vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
 	vector<int> v(first, last);
@@ -303,7 +329,6 @@ void printMenu()
 
 		cin >> option;
 
-
 		switch (option) {
 		case 1:
 			if (askForData(M, N, fileName))
@@ -386,6 +411,7 @@ void printMenu()
 
 int main()
 {
+	printMenu();
     return 0;
 }
 

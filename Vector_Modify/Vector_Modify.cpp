@@ -156,8 +156,8 @@ int findNumDifference(vector<int> v)
 
 int findNumDifference(vector<int>::iterator first, vector<int>::iterator last)
 {
-	int min = 0;
-	int max = 0;
+	int min = *first;
+	int max = *first;
 	last++;
 	while (first != last)
 	{

@@ -158,7 +158,8 @@ int findNumDifference(vector<int>::iterator first, vector<int>::iterator last)
 {
 	int min = 0;
 	int max = 0;
-	while (first++ != last)
+	last++;
+	while (first != last)
 	{
 		if (*first < min) {
 			min = *first;
@@ -166,6 +167,7 @@ int findNumDifference(vector<int>::iterator first, vector<int>::iterator last)
 		else if (*first > max) {
 			max = *first;
 		}
+		first++;
 	}
 	return (max - min);
 }
@@ -197,7 +199,7 @@ void getRange(vector<int> v, int &a, int &b) {
 	cin >> b;
 	while ((b < 0) || (b >= v.size()) || (b < a)) 
 	{
-		cin >> a;
+		cin >> b;
 		if ((b < 0) || (b >= v.size()))
 			cout << "Число должно быть не меньше 0! Повторите ввод" << endl;
 		else if (b >= v.size())
@@ -216,7 +218,7 @@ void getToElems(vector<int>::iterator &left, vector<int>::iterator &right, int a
 
 vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
-	vector<int> v(first, last);
+	vector<int> v(first, ++last);
 	int i = 0;
 	for (unsigned i = 0; i < v.size(); ++i) {
 		if (v[i] % 2 == 0)
@@ -291,10 +293,12 @@ void printToScreen(vector<int> v)
 
 void printToScreen(vector<int>::iterator first, vector<int>::iterator last)
 {
-	while (first++ != last)
+	while (first != last)
 	{
 		cout << *first << "  ";
+		first++;
 	}
+	cout << *first << "  ";
 }
 
 void printToFile(vector<int> v)

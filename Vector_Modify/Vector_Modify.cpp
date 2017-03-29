@@ -424,17 +424,18 @@ void printMenu()
 				printToFile(v);
 			}
 			break;
-		case 10: 
-			break;
+		
 		case 11: printToScreen(v); 
 			cout << endl; 
 			break;
 
-		default: cout << "Ошибка! Повторите ввод" << endl;
+		default: cout << "Ошибка! Повторите ввод" << endl; break;
+		case 10: 
+			break;
 		}
 	}
 	v.erase(v.begin(), v.end());
-	modifiedV.erase(v.begin(), v.end());
+	modifiedV.erase(modifiedV.begin(), modifiedV.end());
 }
 
 int main()

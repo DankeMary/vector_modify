@@ -189,18 +189,17 @@ void getRange(vector<int> v, int &a, int &b) {
 	while ((a < 0) || (a >= v.size()))
 	{
 		cin >> a;
-		if ((a < 0) || (a >= v.size()))
+		if (a < 0)
 			cout << "Число должно быть больше 0! Повторите ввод" << endl;
 		else if (a >= v.size())
 			cout << "Число превышает размер вектора (" << v.size() << ")! Повторите ввод" << endl;	
 	}		
 	
 	cout << "Введите правую границу" << endl;
-	cin >> b;
 	while ((b < 0) || (b >= v.size()) || (b < a)) 
 	{
 		cin >> b;
-		if ((b < 0) || (b >= v.size()))
+		if (b < 0)
 			cout << "Число должно быть не меньше 0! Повторите ввод" << endl;
 		else if (b >= v.size())
 			cout << "Число вне диапазона (0.." << v.size()-1 << ")! Повторите ввод" << endl;

@@ -421,6 +421,8 @@ void printMenu()
 					cin >> option;
 					if (option == 1)
 					{
+						if (modifiedV.empty())
+							modifiedV = v;
 						printToScreen(modifiedV);
 						cout << "\n" ;
 					}

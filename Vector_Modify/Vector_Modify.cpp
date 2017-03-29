@@ -329,83 +329,63 @@ void printMenu()
 	string fileName = "";
 	ifstream fin;
 	vector<int> v, modifiedV;
+	vector<int>::iterator left = v.begin();
+	vector<int>::iterator right = v.begin();
 	while (option != 10)
 	{
 		cout << "\n";
 		cout << "\n1. Заполнить файл рандомными числами\n";
-		cout << "2. Загрузить числа из файла\n";
+		cout << "2. Загрузить элементы из файла\n";
 		cout << "3. Преобразовать контейнер\n";
 		cout << "4. Преобразовать часть контейнера\n";
 		cout << "5. Преобразование с transform\n";
 		cout << "6. Преобразование с for_each\n";
-		cout << "7. Вычислить сумму чисел\n";  
-		cout << "8. Вычислить среднее арифметическое чисел\n";  
+		cout << "7. Вычислить сумму элементов\n";  
+		cout << "8. Вычислить среднее арифметическое элементов\n";  
 		cout << "9. Вывести результат\n"; 
 		cout << "10. Выход\n";
 		cout << "\n";
 
 		cin >> option;
-
-		switch (option) {
-		case 1:
-			if (askForData(M, N, fileName))
-				fillFileRandomCycle(M, N, fileName);
-			break;
-		case 2:
-			v = getContainer(fin);
-			break;
-		case 3:
-			if (v.empty()) {
-				cout << "Контейнер пуст" << endl;
-			}
-			else {
+		if (!(!((option == 1) || (option == 2) || (option == 10)) & isEmpty(v)))
+		{
+			modifiedV.clear();
+			switch (option) {
+			case 1:
+				if (askForData(M, N, fileName))
+					fillFileRandomCycle(M, N, fileName);
+				break;
+			case 2:
+				v.clear();
+				v = getContainer(fin);
+				break;
+			case 3:
 				modifiedV = modify(v);
 				printResult(v, modifiedV);
-			}				
-			break;
-		case 4:
-			if (v.empty()) {
-				cout << "Контейнер пуст" << endl;
-			}
-			else {
+				break;
+			case 4:
 				int a, b;
 				getRange(v, a, b);
-				vector<int>::iterator left = v.begin();
-				vector<int>::iterator right = v.begin();
+				left = right = v.begin();
 				getToElems(left, right, a, b);
 				modifiedV = modify(left, right);
 				printResult(left, right, modifiedV);
-			}			
-			break;
-		case 5:
-			
-			if (v.empty()) {
-				cout << "Контейнер пуст" << endl;
-			}
-			else {
+				break;
+			case 5:
 				modifiedV = replaceTransform(v);
 				printResult(v, modifiedV);
-			}
-			break;
-		case 6:
-			if (v.empty()) {
-				cout << "Контейнер пуст" << endl;
-			}
-			else {
+				break;
+			case 6:
 				modifiedV = replaceForEach(v);
-				printResult(v, modifiedV);
-			}
-			break;
-		case 7:
-			cout << "Сумма элементов вектора - " << findSum(v) << endl;
-			break;
-		case 8:
-			cout << "Среднее арифметическое элементов вектора - " << findAverage(v) << endl;
-			break;
-		case 9:
-			if (v.empty())
-				cout << "Контейнер пуст" << endl;
-			else {
+				printResult(v, modifiedV);		
+				break;
+			case 7:
+				cout << "Сумма элементов вектора - " << findSum(v) << endl;
+				break;
+			case 8:
+				cout << "Среднее арифметическое элементов вектора - " << findAverage(v) << endl;
+				break;
+			case 9:
 				cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
 				while (option != 1 || option != 2) {
 					cin >> option;
@@ -417,13 +397,13 @@ void printMenu()
 					else if (option != 2) {
 						cout << "Повторите ввод!" << endl;
 					}
-				}			
+				}
+				printToFile(v);
+				break;
+			case 10: 
+				break;
+			default: cout << "Ошибка! Повторите ввод" << endl;
 			}
-				
-			printToFile(v);
-			break;
-		case 10: break;
-		default: cout << "Ошибка! Повторите ввод" << endl;
 		}
 	}
 	fin.close();

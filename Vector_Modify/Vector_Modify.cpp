@@ -416,13 +416,13 @@ void printMenu()
 			break;
 		case 9:
 			if (!isEmpty(v)) {
+				if (modifiedV.empty())
+					modifiedV = v;
 				cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
 				while (option != 1 && option != 2) {
 					cin >> option;
 					if (option == 1)
-					{
-						if (modifiedV.empty())
-							modifiedV = v;
+					{						
 						printToScreen(modifiedV);
 						cout << "\n" ;
 					}
@@ -434,12 +434,8 @@ void printMenu()
 				printToFile(modifiedV);
 			}
 			break;
-		
-		case 11: printToScreen(v); 
-			cout << endl; 
-			break;
 		case 10: 
-			break;
+			break;		
 		default: cout << "Ошибка! Повторите ввод" << endl;
 		
 		}

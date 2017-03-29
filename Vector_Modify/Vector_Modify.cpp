@@ -109,7 +109,7 @@ ofstream fillFileRandomCycle(int M, int N, string fileName)
 	ofstream output(fileName.c_str());
 
 	for (int i = 0; i < N; i++) {
-		output << -M + rand() % M << endl;
+		output << rand() % (2*M+1) + (-M) << endl;
 	}
 
 	return output;
@@ -326,7 +326,7 @@ void printResult(vector<int>::iterator first, vector<int>::iterator last, vector
 void printMenu()
 {
 	int option = 0;
-	int M = 0, N = 0;
+	int M, N;
 	string fileName = "";
 	ifstream fin;
 	vector<int> v, modifiedV;
@@ -352,6 +352,7 @@ void printMenu()
 		modifiedV.clear();
 		switch (option) {
 		case 1:
+			M = N = 0;
 			if (askForData(M, N, fileName))
 				fillFileRandomCycle(M, N, fileName);
 			break;

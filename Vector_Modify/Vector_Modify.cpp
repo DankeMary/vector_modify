@@ -354,7 +354,6 @@ void printMenu()
 
 		cin >> option;
 		
-		modifiedV.clear();
 		switch (option) {
 		case 1:
 			if (askForData(M, N, fileName))
@@ -371,6 +370,7 @@ void printMenu()
 			break;
 		case 3:
 			if (!isEmpty(v)) {
+				modifiedV.clear();
 				modifiedV = modify(v);
 				printResult(v, modifiedV);
 			}
@@ -384,18 +384,21 @@ void printMenu()
 				left = right = v.begin();
 				getToElems(left, right, a, b);
 
+				modifiedV.clear();
 				modifiedV = modify(left, right);
 				printResult(left, right, modifiedV);
 			}
 			break;
 		case 5:
 			if (!isEmpty(v)) {
+				modifiedV.clear();
 				modifiedV = replaceTransform(v);
 				printResult(v, modifiedV);
 			}
 			break;
 		case 6:
 			if (!isEmpty(v)) {
+				modifiedV.clear();
 				modifiedV = replaceForEach(v);
 				printResult(v, modifiedV);
 			}
@@ -417,7 +420,7 @@ void printMenu()
 					cin >> option;
 					if (option == 1)
 					{
-						printToScreen(v);
+						printToScreen(modifiedV);
 						cout << "\n" ;
 					}
 					else if (option != 2) {
@@ -425,17 +428,17 @@ void printMenu()
 					}
 				}
 				option = 9;
-				printToFile(v);
+				printToFile(modifiedV);
 			}
 			break;
 		
 		case 11: printToScreen(v); 
 			cout << endl; 
 			break;
-
-		default: cout << "Ошибка! Повторите ввод" << endl; break;
 		case 10: 
 			break;
+		default: cout << "Ошибка! Повторите ввод" << endl;
+		
 		}
 	}
 	v.erase(v.begin(), v.end());

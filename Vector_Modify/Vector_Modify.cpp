@@ -14,7 +14,6 @@ using namespace std;
 
 bool askForData(int &M, int &N, string &fileName)  
 {
-
 	while (M <= 0)
 	{
 		cout << "Введите целое число М (M > 0)" << endl;
@@ -64,7 +63,13 @@ bool askForData(int &M, int &N, string &fileName)
 	}
 	return true;
 }
-
+void askForFileName(string& fileName) {
+	fileName = "";
+	while (fileName == "") {
+		cout << "Введите имя файла" << endl;
+		cin >> fileName;
+	}
+}
 /*  TO BE CHANGED  */
 vector<int> getContainer(ifstream& fin)    
 {
@@ -115,7 +120,6 @@ struct randNumFromSegment {
 	}
 	int m;
 };
-
 
 ofstream fillFileRandomGenerate(int M, const int N, string fileName)
 {
@@ -230,7 +234,7 @@ vector<int> replaceForEach(vector<int> v)
 {
 	int diff = findNumDifference(v);
 
-	for_each(v.begin(), v.end(), returnNum());
+	for_each(v.begin(), v.end(), returnNum());  //Can be replaced with returnIfOdd?
 
 	return v;
 }
@@ -256,7 +260,6 @@ vector<int> replaceTransform(vector<int> v) {
 
 	return v;
 }
-
 
 int findSum(vector<int> v)
 {
@@ -366,8 +369,10 @@ void printMenu()
 			case 4:
 				int a, b;
 				getRange(v, a, b);
+
 				left = right = v.begin();
 				getToElems(left, right, a, b);
+
 				modifiedV = modify(left, right);
 				printResult(left, right, modifiedV);
 				break;

@@ -72,15 +72,12 @@ void askForFileName(string& fileName) {
 	}
 }
 
-/*  TO BE CHANGED  */
-
 vector<int> getContainer(ifstream& fin)    
 {
 	vector<int> v;
-	if (!fin.is_open()) // если файл не открыт
+	if (!fin.is_open()) 
 	{
-		cout << "Файл не может быть открыт!\n"; // сообщить об этом
-		//v.erase(v.begin(), v.end()); 
+		cout << "Файл не может быть открыт!\n"; 
 	} 
 	else
 	{

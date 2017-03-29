@@ -107,13 +107,13 @@ struct randNumFromSegment {
 	int m;
 };
 
-/* CAUSES AN ERROR */
+
 ofstream fillFileRandomGenerate(int M, const int N, string fileName)
 {
 	vector<int> v(N);
 	ofstream output;
 	output.open(fileName);
-	generate(v.begin(), v.end(), randNumFromSegment(M));	// ?????????????????????????????????????????????
+	generate(v.begin(), v.end(), randNumFromSegment(M));	
 	
 	for (int i = 0; i < N; i++) {
 		output << v[i] << endl;
@@ -166,7 +166,6 @@ vector<int> modify(vector<int> v)
 	return v;
 }
 
-/*    TO BE CHANGED  */
 vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
 	vector<int> v(first, last);
@@ -179,9 +178,6 @@ vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	return v;
 }
 
-/*int returnNum(int num) {
-	return num;
-}*/
 
 struct returnNum {
 	returnNum(){};
@@ -190,7 +186,7 @@ struct returnNum {
 	}
 };
 
-/* CAUSES AN ERROR */
+
 vector<int> replaceForEach(vector<int> v)
 {
 	int diff = findNumDifference(v);
@@ -199,12 +195,6 @@ vector<int> replaceForEach(vector<int> v)
 
 	return v;
 }
-/*int returnIfOdd(int i, int j) {
-	if (i % 2 == 0)
-		return j;
-	else
-		return i;
-}*/
 
 struct returnIfOdd {
 	returnIfOdd(int x) :m(x) {};

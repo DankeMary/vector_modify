@@ -298,10 +298,7 @@ void printToFile(vector<int> v)
 {
 	ofstream fout;
 	string fileName = "";
-	while (fileName == "") {
-		cout << "ֲגוהטעו טלÿ פאיכא" << endl;
-		cin >> fileName;
-	}
+	askForFileName(fileName);
 	fout.open(fileName); 
 	for (unsigned i = 0; i < v.size(); i++)
 		fout << v.at(i) << "  " << endl;
@@ -360,6 +357,8 @@ void printMenu()
 				break;
 			case 2:
 				v.clear();
+				askForFileName(fileName);
+				fin.open(fileName);
 				v = getContainer(fin);
 				break;
 			case 3:

@@ -181,7 +181,7 @@ vector<int> modify(vector<int> v)
 
 void getRange(vector<int> v, int &a, int &b) {
 	a = -1;
-	b = 0;
+	b = -1;
 	cout << "Введите левую границу" << endl;
 	while ((a < 0) || (a >= v.size()))
 	{
@@ -193,7 +193,7 @@ void getRange(vector<int> v, int &a, int &b) {
 	}		
 	
 	cout << "Введите правую границу" << endl;
-	while ((b < 0) || (b >= v.size()) || (b < a)) 
+	while ((b >= v.size()) || (b < a)) 
 	{
 		cin >> b;
 		if (b < 0)

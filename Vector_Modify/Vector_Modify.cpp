@@ -169,30 +169,14 @@ vector<int> modify(vector<int> v)
 /*    TO BE CHANGED  */
 vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
-	vector<int> v;
-	int count = 0;
+	vector<int> v(first, last);
 	int i = 0;
-	while (first-- != null) {  
-		first--;
-		count++;
+	for (unsigned i = 0; i < v.size(); ++i) {
+		if (v[i] % 2 == 0)
+			v[i] = diff;
 	}
 
-	while (i != count) {
-		v.push_back(*first);
-		first++;
-	}
-
-	while (first++ != last) {
-		if (*first % 2 == 0) {
-			*first = diff;
-		}
-		first++;
-	}
-	while (last++ != null) {
-		v.push_back(*last);
-		last++;
-	}
-	return v;  
+	return v;
 }
 
 /*int returnNum(int num) {

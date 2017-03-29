@@ -88,6 +88,15 @@ vector<int> getContainer(ifstream& fin)
 	return v;
 }
 
+bool isEmpty (vector<int> v)
+{
+	if (v.empty()) {
+		cout << "Контейнер пуст" << endl;
+		return true;
+	}
+	return false;		
+}
+
 ofstream fillFileRandomCycle(int M, int N, string fileName)
 {
 	ofstream output(fileName.c_str());
@@ -197,6 +206,7 @@ void getToElems(vector<int>::iterator &left, vector<int>::iterator &right, int a
 	for (int i = 0; i < b; i++)
 		right++;
 }
+
 vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
 	vector<int> v(first, last);
@@ -360,9 +370,11 @@ void printMenu()
 			else {
 				int a, b;
 				getRange(v, a, b);
-
-				modifiedV = modify(v.begin(), v.end());
-				printResult(v, modifiedV);
+				vector<int>::iterator left = v.begin();
+				vector<int>::iterator right = v.begin();
+				getToElems(left, right, a, b);
+				modifiedV = modify(left, right);
+				printResult(left, right, modifiedV);
 			}			
 			break;
 		case 5:

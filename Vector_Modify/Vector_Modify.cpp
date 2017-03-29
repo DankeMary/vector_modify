@@ -243,6 +243,7 @@ struct returnIfOdd {
 	}
 	int m;
 };
+
 vector<int> replaceForEach(vector<int> v)
 {
 	int diff = findNumDifference(v);
@@ -260,7 +261,7 @@ vector<int> replaceTransform(vector<int> v) {
 	for (unsigned i = 0; i < diffV.size(); i++)
 		diffV[i] = diff;
 
-	transform(v.begin(), v.end(), diffV.begin(), returnIfOdd(diff));
+	transform(v.begin(), v.end(), v.begin(), returnIfOdd(diff));
 
 	return v;
 }

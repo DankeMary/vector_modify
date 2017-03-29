@@ -14,6 +14,7 @@ using namespace std;
 
 bool askForData(int &M, int &N, string &fileName)  
 {
+	M = N = 0;
 	while (M <= 0)
 	{
 		cout << "Введите целое число М (M > 0)" << endl;
@@ -109,7 +110,7 @@ ofstream fillFileRandomCycle(int M, int N, string fileName)
 	ofstream output(fileName.c_str());
 
 	for (int i = 0; i < N; i++) {
-		output << rand() % (2*M+1) + (-M) << endl;
+		output << rand() % (2 * M + 1) + (-M) << endl;
 	}
 
 	return output;
@@ -309,17 +310,17 @@ void printToFile(vector<int> v)
 
 void printResult(vector<int> v, vector<int> vMod)
 {
-	cout << "/nИсходный вектор: " << endl;
+	cout << "\nИсходный вектор: " << endl;
 	printToScreen(v);
-	cout << "/nИзмененный вектор: " << endl;
+	cout << "\nИзмененный вектор: " << endl;
 	printToScreen(vMod);
 }
 
 void printResult(vector<int>::iterator first, vector<int>::iterator last, vector<int> vMod)
 {
-	cout << "/nИсходный вектор: " << endl;
+	cout << "\nИсходный вектор: " << endl;
 	printToScreen(first, last);
-	cout << "/nИзмененный вектор: " << endl;
+	cout << "\nИзмененный вектор: " << endl;
 	printToScreen(vMod);
 }
 
@@ -352,15 +353,17 @@ void printMenu()
 		modifiedV.clear();
 		switch (option) {
 		case 1:
-			M = N = 0;
 			if (askForData(M, N, fileName))
 				fillFileRandomCycle(M, N, fileName);
+			if (askForData(M, N, fileName))
+				fillFileRandomGenerate(M, N, fileName);
 			break;
 		case 2:
 			v.clear();
 			askForFileName(fileName);
 			fin.open(fileName);
 			v = getContainer(fin);
+			fin.close();
 			break;
 		case 3:
 			if (!isEmpty(v)) {
@@ -406,26 +409,30 @@ void printMenu()
 		case 9:
 			if (!isEmpty(v)) {
 				cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
-				while (option != 1 || option != 2) {
+				while (option != 1 && option != 2) {
 					cin >> option;
 					if (option == 1)
 					{
 						printToScreen(v);
-						option = 9;
+						cout << "\n" ;
 					}
 					else if (option != 2) {
 						cout << "Повторите ввод!" << endl;
 					}
 				}
+				option = 9;
 				printToFile(v);
 			}
 			break;
 		case 10: 
 			break;
+		case 11: printToScreen(v); 
+			cout << endl; 
+			break;
+
 		default: cout << "Ошибка! Повторите ввод" << endl;
 		}
 	}
-	fin.close();
 	v.erase(v.begin(), v.end());
 	modifiedV.erase(v.begin(), v.end());
 }

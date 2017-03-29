@@ -231,16 +231,6 @@ struct returnNum {
 		return num;
 	}
 };
-
-vector<int> replaceForEach(vector<int> v)
-{
-	int diff = findNumDifference(v);
-
-	for_each(v.begin(), v.end(), returnNum());  //Can be replaced with returnIfOdd?
-
-	return v;
-}
-
 struct returnIfOdd {
 	returnIfOdd(int x) :m(x) {};
 	int operator()(int& n) {
@@ -251,6 +241,16 @@ struct returnIfOdd {
 	}
 	int m;
 };
+vector<int> replaceForEach(vector<int> v)
+{
+	int diff = findNumDifference(v);
+
+	for_each(v.begin(), v.end(), /*returnNum()*/returnIfOdd(diff));  //Can be replaced with returnIfOdd?
+
+	return v;
+}
+
+
 
 vector<int> replaceTransform(vector<int> v) {
 	int diff = findNumDifference(v);
@@ -348,26 +348,29 @@ void printMenu()
 		cout << "\n";
 
 		cin >> option;
-		if (!(!((option == 1) || (option == 2) || (option == 10)) & isEmpty(v)))
-		{
-			modifiedV.clear();
-			switch (option) {
-			case 1:
-				if (askForData(M, N, fileName))
-					fillFileRandomCycle(M, N, fileName);
-				break;
-			case 2:
-				v.clear();
-				askForFileName(fileName);
-				fin.open(fileName);
-				v = getContainer(fin);
-				break;
-			case 3:
+		
+		modifiedV.clear();
+		switch (option) {
+		case 1:
+			if (askForData(M, N, fileName))
+				fillFileRandomCycle(M, N, fileName);
+			break;
+		case 2:
+			v.clear();
+			askForFileName(fileName);
+			fin.open(fileName);
+			v = getContainer(fin);
+			break;
+		case 3:
+			if (!isEmpty(v)) {
 				modifiedV = modify(v);
 				printResult(v, modifiedV);
-				break;
-			case 4:
-				int a, b;
+			}
+				
+			break;
+		case 4:
+			int a, b;
+			if (!isEmpty(v)) {
 				getRange(v, a, b);
 
 				left = right = v.begin();
@@ -375,22 +378,32 @@ void printMenu()
 
 				modifiedV = modify(left, right);
 				printResult(left, right, modifiedV);
-				break;
-			case 5:
+			}
+			break;
+		case 5:
+			if (!isEmpty(v)) {
 				modifiedV = replaceTransform(v);
 				printResult(v, modifiedV);
-				break;
-			case 6:
+			}
+			break;
+		case 6:
+			if (!isEmpty(v)) {
 				modifiedV = replaceForEach(v);
-				printResult(v, modifiedV);		
-				break;
-			case 7:
+				printResult(v, modifiedV);
+			}
+			break;
+		case 7:
+			if (!isEmpty(v)) {
 				cout << "Сумма элементов вектора - " << findSum(v) << endl;
-				break;
-			case 8:
+			}
+			break;
+		case 8:
+			if (!isEmpty(v)) {
 				cout << "Среднее арифметическое элементов вектора - " << findAverage(v) << endl;
-				break;
-			case 9:
+			}
+			break;
+		case 9:
+			if (!isEmpty(v)) {
 				cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
 				while (option != 1 || option != 2) {
 					cin >> option;
@@ -404,11 +417,11 @@ void printMenu()
 					}
 				}
 				printToFile(v);
-				break;
-			case 10: 
-				break;
-			default: cout << "Ошибка! Повторите ввод" << endl;
 			}
+			break;
+		case 10: 
+			break;
+		default: cout << "Ошибка! Повторите ввод" << endl;
 		}
 	}
 	fin.close();
@@ -418,6 +431,7 @@ void printMenu()
 
 int main()
 {
+	setlocale(LC_ALL, "Russian");
 	printMenu();
     return 0;
 }

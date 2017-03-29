@@ -227,12 +227,15 @@ vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
 	return v;
 }
 
-struct returnNum {
-	returnNum(){};
-	int operator()(int num) {
-		return num;
+struct changeIfOdd {
+	changeIfOdd(int x) :m(x) {};
+	void operator()(int& n) {
+		if (n % 2 == 0) 
+			n = m;
 	}
+	int m;
 };
+
 struct returnIfOdd {
 	returnIfOdd(int x) :m(x) {};
 	int operator()(int& n) {
@@ -248,12 +251,10 @@ vector<int> replaceForEach(vector<int> v)
 {
 	int diff = findNumDifference(v);
 
-	for_each(v.begin(), v.end(), /*returnNum()*/returnIfOdd(diff));  //Can be replaced with returnIfOdd?
+	for_each(v.begin(), v.end(), changeIfOdd(diff)); 
 
 	return v;
 }
-
-
 
 vector<int> replaceTransform(vector<int> v) {
 	int diff = findNumDifference(v);

@@ -72,7 +72,7 @@ void askForFileName(string& fileName) {
 	}
 }
 
-vector<int> getContainer(ifstream& fin)    
+vector<int> getContainer(fstream& fin)    
 {
 	vector<int> v;
 	if (!fin.is_open()) 
@@ -88,6 +88,7 @@ vector<int> getContainer(ifstream& fin)
 			v.push_back(a);
 		}
 		getchar();
+		fin.close();
 	}
 	
 	return v;
@@ -102,9 +103,9 @@ bool isEmpty (vector<int> v)
 	return false;		
 }
 
-ofstream fillFileRandomCycle(int M, int N, string fileName)
+fstream fillFileRandomCycle(int M, int N, string fileName)
 {
-	ofstream output(fileName.c_str());
+	fstream output(fileName, ios::out);
 
 	for (int i = 0; i < N; i++) {
 		output << rand() % (2 * M + 1) + (-M) << endl;
@@ -121,11 +122,11 @@ struct randNumFromSegment {
 	int m;
 };
 
-ofstream fillFileRandomGenerate(int M, const int N, string fileName)
+fstream fillFileRandomGenerate(int M, const int N, string fileName)
 {
 	vector<int> v(N);
-	ofstream output;
-	output.open(fileName);
+	fstream output;
+	output.open(fileName, ios::out);
 	generate(v.begin(), v.end(), randNumFromSegment(M));	
 	
 	for (int i = 0; i < N; i++) {
@@ -301,10 +302,10 @@ void printToScreen(vector<int>::iterator first, vector<int>::iterator last)
 
 void printToFile(vector<int> v)
 {
-	ofstream fout;
+	fstream fout;
 	string fileName = "";
 	askForFileName(fileName);
-	fout.open(fileName); 
+	fout.open(fileName, ios::out);
 	for (unsigned i = 0; i < v.size(); i++)
 		fout << v.at(i) << "  " << endl;
 	fout.close();
@@ -331,7 +332,8 @@ void printMenu()
 	int option = 0;
 	int M, N;
 	string fileName = "";
-	ifstream fin;
+	fstream f;
+
 	vector<int> v, modifiedV;
 	vector<int>::iterator left = v.begin();
 	vector<int>::iterator right = v.begin();
@@ -354,17 +356,26 @@ void printMenu()
 		
 		switch (option) {
 		case 1:
-			if (askForData(M, N, fileName))
-				fillFileRandomCycle(M, N, fileName);
-			if (askForData(M, N, fileName))
-				fillFileRandomGenerate(M, N, fileName);
+			cout << "Заполнить с помощью : 1 - цикла, 2 - алгоритма : ";
+			cin >> option;
+
+			if ((option == 1) && askForData(M, N, fileName))
+				f = fillFileRandomCycle(M, N, fileName);
+			if ((option == 2) && askForData(M, N, fileName))
+				f = fillFileRandomGenerate(M, N, fileName);
+			f.close();
+			option = 1;
 			break;
 		case 2:
 			v.clear();
-			askForFileName(fileName);
-			fin.open(fileName);
-			v = getContainer(fin);
-			fin.close();
+			if (fileName == "") 
+				askForFileName(fileName);
+			else
+				f.open(fileName);
+			v = getContainer(f);
+			modifiedV.clear();
+			modifiedV = v;
+			f.close();
 			break;
 		case 3:
 			if (!isEmpty(v)) {

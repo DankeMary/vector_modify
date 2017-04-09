@@ -14,11 +14,23 @@ using namespace std;
 
 bool askForData(int &M, int &N, string &fileName)  
 {
+	string str;
 	M = N = 0;
 	while (M <= 0)
 	{
 		cout << "Введите целое число М (M > 0)" << endl;
-		cin >> M;
+		//cin >> M;
+		getline(cin, str);
+		while (M == 0)
+		{
+			try {
+				getline(cin, str);
+				M = stoi(str);
+			}
+			catch (std::invalid_argument e) {
+				cout << "Введен неверный символ! Повторите ввод" << endl;
+			}
+		}
 		if (M < 1)
 		{
 			int choice = 1;
@@ -33,7 +45,18 @@ bool askForData(int &M, int &N, string &fileName)
 	while (N <= 0)
 	{
 		cout << "Введите целое число N (N > 0)" << endl;
-		cin >> N;
+		//cin >> N;
+		//getline(cin, str);
+		while (N == 0)
+		{
+			try {
+				getline(cin, str);
+				N = stoi(str);
+			}
+			catch (std::invalid_argument e) {
+				cout << "Введен неверный символ! Повторите ввод" << endl;
+			}
+		}
 		if (N < 1)
 		{
 			int choice = 1;
@@ -54,11 +77,22 @@ bool askForData(int &M, int &N, string &fileName)
 		cin >> fileName;
 		if (fileName == "")
 		{
-			int choice = 1;
+			int choice = 0;
 			cout << "Ошибка! Имя файла должно быть непустым" << endl;
 			cout << "1 - Повторить попытку" << endl;
 			cout << "2 - Выход в главное меню" << endl;
-			cin >> choice;
+			getline(cin, str);
+			while (choice == 0)
+			{
+				try {
+					getline(cin, str);
+					choice = stoi(str);
+				}
+				catch (std::invalid_argument e) {
+					cout << "Введен неверный символ! Повторите ввод" << endl;
+				}
+			}
+			//cin >> choice;
 			if (choice == 2) return false;
 		}
 	}
@@ -151,7 +185,7 @@ int findNumDifference(vector<int> v)
 	}
 	return (max - min);
 }
-
+//!!!!!!!!!!!!!!!!!!!!!
 int findNumDifference(vector<int>::iterator first, vector<int>::iterator last)
 {
 	int min = *first;
@@ -179,24 +213,45 @@ vector<int> modify(vector<int> v)
 		}
 	return v;
 }
-
+//*
 void getRange(vector<int> v, int &a, int &b) {
 	a = -1;
 	b = -1;
+	string str;
+	
 	cout << "Введите левую границу" << endl;
 	while ((a < 0) || (a >= v.size()))
 	{
-		cin >> a;
+		getline(cin, str);
+		while (a == -1)
+		{			
+			try {
+				getline(cin, str);
+				a = stoi(str);
+			}
+			catch (std::invalid_argument e) {
+				cout << "Введен неверный символ! Повторите ввод" << endl;
+			}
+		}	
 		if (a < 0)
 			cout << "Число должно быть больше 0! Повторите ввод" << endl;
 		else if (a >= v.size())
-			cout << "Число превышает размер вектора (" << v.size() << ")! Повторите ввод" << endl;	
+			cout << "Число превышает размер вектора (" << v.size() << ")! Повторите ввод" << endl;
 	}		
 	
-	cout << "Введите правую границу" << endl;
+	cout << "Введите правую границу" << endl;	
 	while ((b >= v.size()) || (b < a)) 
 	{
-		cin >> b;
+		while (b == -1)
+		{
+			try {
+				getline(cin, str);
+				b = stoi(str);
+			}
+			catch (std::invalid_argument e) {
+				cout << "Введен неверный символ! Повторите ввод" << endl;
+			}
+		}
 		if (b < 0)
 			cout << "Число должно быть не меньше 0! Повторите ввод" << endl;
 		else if (b >= v.size())
@@ -213,20 +268,19 @@ void getToElems(vector<int>::iterator &left, vector<int>::iterator &right, int a
 		right++;
 }
 
-vector<int> modify(vector<int>::iterator first, vector<int>::iterator last) {
+void modify(vector<int>::iterator first, vector<int>::iterator last) {
 	int diff = findNumDifference(first, last);
-	vector<int> v(first, ++last);
 	int i = 0;
-	for (unsigned i = 0; i < v.size(); ++i) {
-		if (v[i] % 2 == 0)
-			v[i] = diff;
-	}
 
-	return v;
+	do {
+		if (*first % 2 == 0)
+			*first = diff;
+		first++;
+	} while (first != last);	
 }
 
-struct changeIfOdd {
-	changeIfOdd(int x) :m(x) {};
+struct changeIfEven {
+	changeIfEven(int x) :m(x) {};
 	void operator()(int& n) {
 		if (n % 2 == 0) 
 			n = m;
@@ -234,8 +288,8 @@ struct changeIfOdd {
 	int m;
 };
 
-struct returnIfOdd {
-	returnIfOdd(int x) :m(x) {};
+struct replaceIfEven {
+	replaceIfEven(int x) :m(x) {};
 	int operator()(int& n) {
 		if (n % 2 == 0) {
 			return m;
@@ -249,18 +303,15 @@ vector<int> replaceForEach(vector<int> v)
 {
 	int diff = findNumDifference(v);
 
-	for_each(v.begin(), v.end(), changeIfOdd(diff)); 
+	for_each(v.begin(), v.end(), changeIfEven(diff)); 
 
 	return v;
 }
 
 vector<int> replaceTransform(vector<int> v) {
 	int diff = findNumDifference(v);
-	vector<int> diffV(v.size());
-	for (unsigned i = 0; i < diffV.size(); i++)
-		diffV[i] = diff;
-
-	transform(v.begin(), v.end(), v.begin(), returnIfOdd(diff));
+	
+	transform(v.begin(), v.end(), v.begin(), replaceIfEven(diff));
 
 	return v;
 }
@@ -290,16 +341,6 @@ void printToScreen(vector<int> v)
 		cout << v.at(i) << "  ";
 }
 
-void printToScreen(vector<int>::iterator first, vector<int>::iterator last)
-{
-	while (first != last)
-	{
-		cout << *first << "  ";
-		first++;
-	}
-	cout << *first << "  ";
-}
-
 void printToFile(vector<int> v)
 {
 	fstream fout;
@@ -315,14 +356,6 @@ void printResult(vector<int> v, vector<int> vMod)
 {
 	cout << "\nИсходный вектор: " << endl;
 	printToScreen(v);
-	cout << "\nИзмененный вектор: " << endl;
-	printToScreen(vMod);
-}
-
-void printResult(vector<int>::iterator first, vector<int>::iterator last, vector<int> vMod)
-{
-	cout << "\nИсходный вектор: " << endl;
-	printToScreen(first, last);
 	cout << "\nИзмененный вектор: " << endl;
 	printToScreen(vMod);
 }
@@ -355,7 +388,7 @@ void printMenu()
 		cin >> option;
 		
 		switch (option) {
-		case 1:
+		case 1://Заполнить файл рандомными числами
 			cout << "Заполнить с помощью : 1 - цикла, 2 - алгоритма : ";
 			cin >> option;
 
@@ -366,18 +399,17 @@ void printMenu()
 			f.close();
 			option = 1;
 			break;
-		case 2:
+		case 2://Загрузить элементы из файла
 			v.clear();
 			if (fileName == "") 
 				askForFileName(fileName);
-			else
-				f.open(fileName);
+			f.open(fileName);
 			v = getContainer(f);
 			modifiedV.clear();
 			modifiedV = v;
 			f.close();
 			break;
-		case 3:
+		case 3://Преобразовать контейнер
 			if (!isEmpty(v)) {
 				modifiedV.clear();
 				modifiedV = modify(v);
@@ -385,44 +417,47 @@ void printMenu()
 			}
 				
 			break;
-		case 4:
+		case 4://Преобразовать часть контейнера
 			int a, b;
 			if (!isEmpty(v)) {
 				getRange(v, a, b);
-
-				left = right = v.begin();
+				modifiedV = v;
+				left = right = modifiedV.begin();
 				getToElems(left, right, a, b);
 
-				modifiedV.clear();
-				modifiedV = modify(left, right);
-				printResult(left, right, modifiedV);
+				//modifiedV.clear();  ???
+				
+				modify(left, right);
+				printResult(v, modifiedV);
 			}
 			break;
-		case 5:
+		case 5://Преобразование с transform
 			if (!isEmpty(v)) {
 				modifiedV.clear();
 				modifiedV = replaceTransform(v);
 				printResult(v, modifiedV);
 			}
 			break;
-		case 6:
+		case 6://Преобразование с for_each
 			if (!isEmpty(v)) {
 				modifiedV.clear();
 				modifiedV = replaceForEach(v);
 				printResult(v, modifiedV);
 			}
 			break;
-		case 7:
+		case 7://Вычислить сумму элементов
 			if (!isEmpty(v)) {
-				cout << "Сумма элементов вектора - " << findSum(v) << endl;
+				printToScreen(v);
+				cout << "\nСумма элементов вектора - " << findSum(v) << endl;
 			}
 			break;
-		case 8:
+		case 8://Вычислить среднее арифметическое элементов
 			if (!isEmpty(v)) {
-				cout << "Среднее арифметическое элементов вектора - " << findAverage(v) << endl;
+				printToScreen(v);
+				cout << "\nСреднее арифметическое элементов вектора - " << findAverage(v) << endl;
 			}
 			break;
-		case 9:
+		case 9://Вывести результат
 			if (!isEmpty(v)) {
 				if (modifiedV.empty())
 					modifiedV = v;
@@ -442,7 +477,7 @@ void printMenu()
 				printToFile(modifiedV);
 			}
 			break;
-		case 10: 
+		case 10: //Выход
 			break;		
 		default: cout << "Ошибка! Повторите ввод" << endl;
 		

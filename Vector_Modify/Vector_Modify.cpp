@@ -185,7 +185,7 @@ int findNumDifference(vector<int> v)
 	}
 	return (max - min);
 }
-//!!!!!!!!!!!!!!!!!!!!!
+
 int findNumDifference(vector<int>::iterator first, vector<int>::iterator last)
 {
 	int min = *first;
@@ -370,7 +370,7 @@ void printMenu()
 	vector<int> v, modifiedV;
 	vector<int>::iterator left = v.begin();
 	vector<int>::iterator right = v.begin();
-	while (option != 10)
+	while (option != 11)
 	{
 		cout << "\n";
 		cout << "\n1. Заполнить файл рандомными числами\n";
@@ -381,8 +381,9 @@ void printMenu()
 		cout << "6. Преобразование с for_each\n";
 		cout << "7. Вычислить сумму элементов\n";  
 		cout << "8. Вычислить среднее арифметическое элементов\n";  
-		cout << "9. Вывести результат\n"; 
-		cout << "10. Выход\n";
+		cout << "9. Вывести результат на экран\n";
+		cout << "10. Вывести результат в файл\n";
+		cout << "11. Выход\n";
 		cout << "\n";
 
 		cin >> option;
@@ -399,11 +400,9 @@ void printMenu()
 			f.close();
 			option = 1;
 			break;
-		case 2://Загрузить элементы из файла
-			v.clear();
-			if (fileName == "") 
-				askForFileName(fileName);
-			f.open(fileName);
+		case 2://Загрузить элементы из файла			
+			askForFileName(fileName);
+			f.open(fileName, ios::in);
 			v = getContainer(f);
 			modifiedV.clear();
 			modifiedV = v;
@@ -425,7 +424,7 @@ void printMenu()
 				left = right = modifiedV.begin();
 				getToElems(left, right, a, b);
 
-				//modifiedV.clear();  ???
+				//modifiedV.clear();  
 				
 				modify(left, right);
 				printResult(v, modifiedV);
@@ -457,27 +456,19 @@ void printMenu()
 				cout << "\nСреднее арифметическое элементов вектора - " << findAverage(v) << endl;
 			}
 			break;
-		case 9://Вывести результат
+		case 9://Вывести результат на экран
 			if (!isEmpty(v)) {
 				if (modifiedV.empty())
-					modifiedV = v;
-				cout << "Вывести результат на экран? 1 - Да, 2 - Нет " << endl;
-				while (option != 1 && option != 2) {
-					cin >> option;
-					if (option == 1)
-					{						
-						printToScreen(modifiedV);
-						cout << "\n" ;
-					}
-					else if (option != 2) {
-						cout << "Повторите ввод!" << endl;
-					}
-				}
-				option = 9;
-				printToFile(modifiedV);
+					modifiedV = v;								
+				printToScreen(modifiedV);
+				cout << "\n" ;					
 			}
 			break;
-		case 10: //Выход
+		case 10: 
+			if (!isEmpty(v)) 
+				printToFile(modifiedV);
+			break;
+		case 11: //Выход
 			break;		
 		default: cout << "Ошибка! Повторите ввод" << endl;
 		

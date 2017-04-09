@@ -20,7 +20,7 @@ bool askForData(int &M, int &N, string &fileName)
 	{
 		cout << "Введите целое число М (M > 0)" << endl;
 		//cin >> M;
-		getline(cin, str);
+		//getline(cin, str);
 		while (M == 0)
 		{
 			try {
@@ -45,8 +45,7 @@ bool askForData(int &M, int &N, string &fileName)
 	while (N <= 0)
 	{
 		cout << "Введите целое число N (N > 0)" << endl;
-		//cin >> N;
-		//getline(cin, str);
+		
 		while (N == 0)
 		{
 			try {
@@ -92,7 +91,7 @@ bool askForData(int &M, int &N, string &fileName)
 					cout << "Введен неверный символ! Повторите ввод" << endl;
 				}
 			}
-			//cin >> choice;
+			
 			if (choice == 2) return false;
 		}
 	}
@@ -213,7 +212,7 @@ vector<int> modify(vector<int> v)
 		}
 	return v;
 }
-//*
+
 void getRange(vector<int> v, int &a, int &b) {
 	a = -1;
 	b = -1;
@@ -365,6 +364,7 @@ void printMenu()
 	int option = 0;
 	int M, N;
 	string fileName = "";
+	string str;
 	fstream f;
 
 	vector<int> v, modifiedV;
@@ -386,13 +386,40 @@ void printMenu()
 		cout << "11. Выход\n";
 		cout << "\n";
 
-		cin >> option;
-		
+		option = 0;
+		while (option == 0)
+		{
+			try {
+				getline(cin, str);
+				option = stoi(str);
+			}
+			catch (std::invalid_argument e) {
+				cout << "Введен неверный символ! Повторите ввод" << endl;
+			}
+		}
 		switch (option) {
 		case 1://Заполнить файл рандомными числами
-			cout << "Заполнить с помощью : 1 - цикла, 2 - алгоритма : ";
-			cin >> option;
-
+			cout << "Заполнить с помощью : 1 - цикла, 2 - алгоритма : " << endl;
+			
+			option = 0;
+			
+			while (option == 0)
+			{
+				try {
+					do {
+						getline(cin, str);
+						option = stoi(str);
+						if (option != 1 && option != 2) {
+							cout << "Введено неверное число! Повторите ввод" << endl;
+						}
+					} while (option != 1 && option != 2);
+				}
+				catch (std::invalid_argument e) {
+					cout << "Введен неверный символ! Повторите ввод" << endl;
+					option = 0;
+				}
+			}
+			
 			if ((option == 1) && askForData(M, N, fileName))
 				f = fillFileRandomCycle(M, N, fileName);
 			if ((option == 2) && askForData(M, N, fileName))
@@ -464,7 +491,7 @@ void printMenu()
 				cout << "\n" ;					
 			}
 			break;
-		case 10: 
+		case 10: //Вывести результат в файл
 			if (!isEmpty(v)) 
 				printToFile(modifiedV);
 			break;

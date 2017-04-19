@@ -11,88 +11,58 @@
 #include <cstdlib>
 
 using namespace std;
-
+/* Reads a line after asking a filename in 2 item
+Accepts -1 as a left border*/
 bool askForData(int &M, int &N, string &fileName)  
 {
 	string str;
+	bool flag;
 	M = N = 0;
+	cout << "Введите целое число М (M > 0)" << endl;
 	while (M <= 0)
 	{
-		cout << "Введите целое число М (M > 0)" << endl;
-		//cin >> M;
-		//getline(cin, str);
-		while (M == 0)
-		{
-			try {
-				getline(cin, str);
-				M = stoi(str);
-			}
-			catch (std::invalid_argument e) {
-				cout << "Введен неверный символ! Повторите ввод" << endl;
-			}
+		flag = true;
+		try {
+			getline(cin, str);
+			M = stoi(str);
 		}
-		if (M < 1)
+		catch (std::invalid_argument e) { 
+			cout << "Введен неверный символ! " << endl;
+			flag = false;
+		}		
+		
+		if (flag && (M < 1))
 		{
-			int choice = 1;
-			cout << "Ошибка! Число должно быть больше 0" << endl;
-			cout << "1 - Повторить попытку" << endl;
-			cout << "2 - Выход в главное меню" << endl;
-			cin >> choice;
-			if (choice == 2) return false;
+			cout << "Ошибка! Число должно быть больше 0.Повторите ввод" << endl;
 		}
 	}
-
+	cout << "Введите целое число N (N > 0)" << endl;
 	while (N <= 0)
-	{
-		cout << "Введите целое число N (N > 0)" << endl;
-		
-		while (N == 0)
-		{
-			try {
-				getline(cin, str);
-				N = stoi(str);
-			}
-			catch (std::invalid_argument e) {
-				cout << "Введен неверный символ! Повторите ввод" << endl;
-			}
+	{		
+		flag = true;
+		try {
+			getline(cin, str);
+			N = stoi(str);
 		}
-		if (N < 1)
+		catch (std::invalid_argument e) {
+			cout << "Введен неверный символ! Повторите ввод" << endl;
+			flag = false;
+		}
+		
+		if (flag && (N < 1))
 		{
-			int choice = 1;
 			cout << "Ошибка! Число должно быть больше 0" << endl;
-			cout << "1 - Повторить попытку" << endl;
-			cout << "2 - Выход в главное меню" << endl;
-			cin >> choice;
-			if (choice == 2) return false;
 		}
 	}
 
 	cout << "Введите имя файла" << endl;
-	cin >> fileName;
-
 	while (fileName == "")
 	{
-		cout << "Введите имя файла для заполнения" << endl;
-		cin >> fileName;
+		getline(cin, fileName);
+		
 		if (fileName == "")
 		{
-			int choice = 0;
 			cout << "Ошибка! Имя файла должно быть непустым" << endl;
-			cout << "1 - Повторить попытку" << endl;
-			cout << "2 - Выход в главное меню" << endl;
-			getline(cin, str);
-			while (choice == 0)
-			{
-				try {
-					getline(cin, str);
-					choice = stoi(str);
-				}
-				catch (std::invalid_argument e) {
-					cout << "Введен неверный символ! Повторите ввод" << endl;
-				}
-			}
-			
-			if (choice == 2) return false;
 		}
 	}
 	return true;
@@ -100,8 +70,8 @@ bool askForData(int &M, int &N, string &fileName)
 void askForFileName(string& fileName) {
 	fileName = "";
 	while (fileName == "") {
-		cout << "Введите имя файла" << endl;
-		cin >> fileName;
+		cout << "Введите имя файла" << endl;		
+		getline(cin, fileName);
 	}
 }
 
@@ -120,7 +90,7 @@ vector<int> getContainer(fstream& fin)
 		{
 			v.push_back(a);
 		}
-		getchar();
+		//getchar();
 		fin.close();
 	}
 	
@@ -189,8 +159,7 @@ int findNumDifference(vector<int>::iterator first, vector<int>::iterator last)
 {
 	int min = *first;
 	int max = *first;
-	last++;
-	while (first != last)
+	do
 	{
 		if (*first < min) {
 			min = *first;
@@ -199,7 +168,7 @@ int findNumDifference(vector<int>::iterator first, vector<int>::iterator last)
 			max = *first;
 		}
 		first++;
-	}
+	} while (first != last);
 	return (max - min);
 }
 
@@ -214,49 +183,59 @@ vector<int> modify(vector<int> v)
 }
 
 void getRange(vector<int> v, int &a, int &b) {
-	a = -1;
-	b = -1;
 	string str;
-	
+	bool in = false;
+	a = -1;
 	cout << "Введите левую границу" << endl;
-	while ((a < 0) || (a >= v.size()))
+	while (/*!in || */(a < 0) || (a >= v.size()))
 	{
-		getline(cin, str);
-		while (a == -1)
+		
+		in = false;
+		//getline(cin, str);
+		//Бесконечный цикл, если вводим -1
+		while (!in)
 		{			
 			try {
+				//cin.ignore();
 				getline(cin, str);
 				a = stoi(str);
+				in = true;
 			}
 			catch (std::invalid_argument e) {
 				cout << "Введен неверный символ! Повторите ввод" << endl;
 			}
 		}	
 		if (a < 0)
-			cout << "Число должно быть больше 0! Повторите ввод" << endl;
+			cout << "Число должно быть не меньше 0! Повторите ввод" << endl;
 		else if (a >= v.size())
 			cout << "Число превышает размер вектора (" << v.size() << ")! Повторите ввод" << endl;
-	}		
+		else in = true;
+	}	
 	
+	b = -1;
 	cout << "Введите правую границу" << endl;	
-	while ((b >= v.size()) || (b < a)) 
+	while ((b >= v.size()) || (b <= a)) 
 	{
-		while (b == -1)
+		//b = -1;
+		in = false;
+		while (!in)
 		{
 			try {
 				getline(cin, str);
 				b = stoi(str);
+				in = true;
 			}
 			catch (std::invalid_argument e) {
 				cout << "Введен неверный символ! Повторите ввод" << endl;
 			}
 		}
-		if (b < 0)
+		/*if (b < 0)
 			cout << "Число должно быть не меньше 0! Повторите ввод" << endl;
-		else if (b >= v.size())
+		else */if (b >= v.size())
 			cout << "Число вне диапазона (0.." << v.size()-1 << ")! Повторите ввод" << endl;
-		else if (b < a)
-			cout << "Число должно быть не меньше левой границы (" << a << ")! Повторите ввод" << endl;
+		else if (b <= a)
+			cout << "Число должно быть больше левой границы (" << a << ")! Повторите ввод" << endl;
+		else in = true;
 	}
 }
 

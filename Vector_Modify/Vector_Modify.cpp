@@ -11,8 +11,18 @@
 #include <cstdlib>
 
 using namespace std;
-/* Reads a line after asking a filename in 2 item
-Accepts -1 as a left border*/
+
+void askForFileName(string& fileName) {
+	fileName = "";
+	cout << "Введите имя файла" << endl;
+	while (fileName == "") {
+		getline(cin, fileName);
+		if (fileName == "")
+		{
+			cout << "Ошибка! Имя файла должно быть непустым. Повторите ввод" << endl;
+		}
+	}
+}
 bool askForData(int &M, int &N, string &fileName)  
 {
 	string str;
@@ -55,25 +65,10 @@ bool askForData(int &M, int &N, string &fileName)
 		}
 	}
 
-	cout << "Введите имя файла" << endl;
-	while (fileName == "")
-	{
-		getline(cin, fileName);
-		
-		if (fileName == "")
-		{
-			cout << "Ошибка! Имя файла должно быть непустым" << endl;
-		}
-	}
+	askForFileName(fileName);
 	return true;
 }
-void askForFileName(string& fileName) {
-	fileName = "";
-	while (fileName == "") {
-		cout << "Введите имя файла" << endl;		
-		getline(cin, fileName);
-	}
-}
+
 
 vector<int> getContainer(fstream& fin)    
 {
@@ -90,7 +85,6 @@ vector<int> getContainer(fstream& fin)
 		{
 			v.push_back(a);
 		}
-		//getchar();
 		fin.close();
 	}
 	
@@ -187,16 +181,12 @@ void getRange(vector<int> v, int &a, int &b) {
 	bool in = false;
 	a = -1;
 	cout << "Введите левую границу" << endl;
-	while (/*!in || */(a < 0) || (a >= v.size()))
-	{
-		
+	while ((a < 0) || (a >= v.size()))
+	{		
 		in = false;
-		//getline(cin, str);
-		//Бесконечный цикл, если вводим -1
 		while (!in)
 		{			
 			try {
-				//cin.ignore();
 				getline(cin, str);
 				a = stoi(str);
 				in = true;
@@ -216,7 +206,6 @@ void getRange(vector<int> v, int &a, int &b) {
 	cout << "Введите правую границу" << endl;	
 	while ((b >= v.size()) || (b <= a)) 
 	{
-		//b = -1;
 		in = false;
 		while (!in)
 		{
@@ -229,9 +218,7 @@ void getRange(vector<int> v, int &a, int &b) {
 				cout << "Введен неверный символ! Повторите ввод" << endl;
 			}
 		}
-		/*if (b < 0)
-			cout << "Число должно быть не меньше 0! Повторите ввод" << endl;
-		else */if (b >= v.size())
+		if (b >= v.size())
 			cout << "Число вне диапазона (0.." << v.size()-1 << ")! Повторите ввод" << endl;
 		else if (b <= a)
 			cout << "Число должно быть больше левой границы (" << a << ")! Повторите ввод" << endl;
@@ -242,7 +229,7 @@ void getRange(vector<int> v, int &a, int &b) {
 void getToElems(vector<int>::iterator &left, vector<int>::iterator &right, int a, int b) {
 	for (int i = 0; i < a; i++)
 		left++;
-	for (int i = 0; i < b; i++)
+	for (int i = 0; i <= b; i++)
 		right++;
 }
 
@@ -429,9 +416,7 @@ void printMenu()
 				modifiedV = v;
 				left = right = modifiedV.begin();
 				getToElems(left, right, a, b);
-
-				//modifiedV.clear();  
-				
+								
 				modify(left, right);
 				printResult(v, modifiedV);
 			}

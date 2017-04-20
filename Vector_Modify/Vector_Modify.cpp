@@ -135,8 +135,8 @@ fstream fillFileRandomGenerate(int M, const int N, string fileName)
 
 int findNumDifference(vector<int> v)
 {
-	int min = 0;
-	int max = 0;
+	int min = v.at(0);
+	int max = v.at(0);
 	for (unsigned i = 0; i < v.size(); ++i)
 	{
 		if (v[i] < min) {
@@ -204,7 +204,7 @@ void getRange(vector<int> v, int &a, int &b) {
 	
 	b = -1;
 	cout << "Введите правую границу" << endl;	
-	while ((b >= v.size()) || (b <= a)) 
+	while ((b >= v.size()) || (b < a)) 
 	{
 		in = false;
 		while (!in)
@@ -220,7 +220,7 @@ void getRange(vector<int> v, int &a, int &b) {
 		}
 		if (b >= v.size())
 			cout << "Число вне диапазона (0.." << v.size()-1 << ")! Повторите ввод" << endl;
-		else if (b <= a)
+		else if (b < a)
 			cout << "Число должно быть больше левой границы (" << a << ")! Повторите ввод" << endl;
 		else in = true;
 	}
@@ -255,7 +255,7 @@ struct changeIfEven {
 
 struct replaceIfEven {
 	replaceIfEven(int x) :m(x) {};
-	int operator()(int& n) {
+	int operator()(int n) {
 		if (n % 2 == 0) {
 			return m;
 		};
